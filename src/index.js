@@ -8,8 +8,8 @@ const refs = {
     submit: document.querySelector('button[button-submit]'),
     gallery:document.querySelector('.gallery')
 }
+const newsApiService = new NewsApiService();
 
-const newsApiService = new NewsApiService;
 
 refs.submit.addEventListener('submit', onSearch)
 refs.submit.addEventListener('click',onLoadMore)

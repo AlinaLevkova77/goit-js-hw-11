@@ -4,6 +4,7 @@ export default class NewsApiService {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
+        this.totalHits = null;
     }
 
     async onFindPhotos() {
@@ -20,7 +21,11 @@ export default class NewsApiService {
     set query(newQuery){
         this.searchQuery = newQuery;
     }
+    
     resetPage(){
         this.page = 1;
+    }
+    increasePagу() {
+        this.page += 1;
     }
 }
