@@ -34,7 +34,8 @@ async function onSearch(e) {
     clearMarcup()
     
      try {
-        const result = await newsApiService.onFindPhotos()
+         const result = await newsApiService.onFindPhotos()
+         console.log(result);
         doNewMarcup(result)
         clearMarcup()
         
@@ -55,6 +56,8 @@ async function onSearch(e) {
 function doNewMarcup(marcup) {
  refs.gallery.insertAdjacentHTML('beforeend',hits(marcup))
 }
+
+
 
 function clearMarcup() {
     refs.gallery.innerHTML = '';
@@ -77,12 +80,14 @@ function onLastPhotos() {
 const onEntry = entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            console.log('пора' + DataTransfer.now());
+            console.log('пора' + Date.now());
         }
     })
 }
 
-const options = {}; 
+const options = {
+    rootMargin:'150px',
+}; 
 const observer = new IntersectionObserver(onEntry,options);
 
 
