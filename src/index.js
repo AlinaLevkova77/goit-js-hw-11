@@ -63,7 +63,6 @@ function onLastPhotos() {
     if (newsApiService.lastTotalHils <= 40) {
         hiddeShowMoreBtn()
        Notiflix.Notify.info("We're sorry, but you've reached the end of search results");
-
     }
     
 }
