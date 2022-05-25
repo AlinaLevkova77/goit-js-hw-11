@@ -35,13 +35,14 @@ async function onSearch(e) {
     
      try {
          const result = await newsApiService.onFindPhotos()
-         console.log(result);
-        doNewMarcup(result)
+        //  console.log(result);
+         doNewMarcup(result.data.hits);
         clearMarcup()
         
          newsApiService.setTotalHits(result.data.setTotalHits);
          onLastPhotos()
         //  showMoreBtn()
+         
     } catch (error) {
         Notiflix.Notify.failure("Sorry ,there are no images matching your search query.Please try again.");
     }
