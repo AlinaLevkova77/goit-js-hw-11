@@ -35,7 +35,7 @@ async function onSearch(e) {
     
      try {
          const result = await newsApiService.onFindPhotos()
-        //  console.log(result);
+          console.log(result);
          doNewMarcup(result.data.hits);
         clearMarcup()
         
