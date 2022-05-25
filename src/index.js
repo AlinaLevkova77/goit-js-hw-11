@@ -64,7 +64,8 @@ function onLastPhotos() {
         hiddeShowMoreBtn()
        Notiflix.Notify.info("We're sorry, but you've reached the end of search results");
 
-   }
+    }
+    
 }
 // function hiddeShowMoreBtn() {
 //     refs.onLoadMoreBtn.classList.add('is-hidden')
