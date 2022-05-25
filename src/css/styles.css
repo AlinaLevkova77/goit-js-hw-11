@@ -14,8 +14,8 @@ body {
 
 form {
   display: block;
-  background: #5B3C67;
-  padding: 50px;
+  background: #390c99;
+  padding: 20px;
   width: 100%;
   color: white;
   margin-right: auto;
@@ -25,11 +25,11 @@ form {
 form input {
   text-align: center;
   padding: 10px;
-  margin-bottom: 20px;
   margin-left: 40%;
   width: 23%;
   height: 15px;
-  border: 1px solid #ff8c00;
+  /* border: 1px solid #ffffff; */
+
 }
 
 .button {
@@ -40,5 +40,10 @@ form input {
   height: 55px;
   padding: 10px;
   border: 1px solid #F5C4AB;
+}
+.gallery{
+  width: 500px;
+  height: 500px;
+  background-color: #7F113E;
 }
 
