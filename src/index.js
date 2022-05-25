@@ -82,9 +82,9 @@ const onEntry = entries => {
     })
 }
 
-
-const observer = new IntersectionObserver(onEntry,options);
 const options = {}; 
+const observer = new IntersectionObserver(onEntry,options);
+
 
 observer.observe(refs.sentinel);
 
