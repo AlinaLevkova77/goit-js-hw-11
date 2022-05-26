@@ -65,7 +65,7 @@ button[type='submit'] {
 }
 
 button[type='submit']:hover .search-svg {
-  fill: #82b74b;
+  fill: #0000CD;
 }
 
 /* -----------------IMG--------------- */
