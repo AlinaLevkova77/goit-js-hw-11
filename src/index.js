@@ -2,8 +2,15 @@ import './css/styles.css';
 import NewsApiService from './api/pixabay';
 import Notiflix from 'notiflix';
 import hits from './hbs/hits';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 // import './if';
 // import './io';
+
+const lightbox = new SimpleLightbox('.photo-link', {
+  overlayOpacity: 0.4,
+  animationSpeed: 100,
+});
 const refs = getRefs()
 
 function getRefs() {
@@ -49,11 +56,12 @@ async function onSearch(e) {
     }
 
 }
-// refs.onLoadMoreBtn.addEventListener('click',onLoadMore)
-
-// async function onLoadMore() {
-//     newsApiService.increasePagу()
-// }
+async function loadMore(){
+    lightbox.refresh();
+    API.params.page += 1;
+    doNewMarcup();
+}
+// generateMarkupUI получает данные с сервера и рендерит разметку
 
 function doNewMarcup(marcup) {
     refs.gallery.insertAdjacentHTML('beforeend', hits(marcup))
@@ -84,11 +92,12 @@ function clearMarcup() {
 // }
 
 
-function registerIntersectionObserver() {
+
     const onEntry = entries => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log('пора' + Date.now());
+            if (entry.IntersectionRatio && newsApiService.query !== '') {
+               
+                loadMore()
             }
         })
     }
@@ -97,4 +106,10 @@ function registerIntersectionObserver() {
     };
     const observer = new IntersectionObserver(onEntry, options);
     observer.observe(refs.sentinel);
-}
+
+
+
+
+
+
+
