@@ -120,19 +120,3 @@ img {
   width: calc(100% / 4 - 14px);
 }
 
-.load-more {
-  display: block;
-  margin: 10px auto;
-  border: 2px solid #82b74b;
-  border-radius: 7px;
-  background-color: transparent;
-}
-
-.load-more:hover {
-  background-color: #82b74b;
-  border: 2px solid inherit;
-}
-
-.load-more.is-hidden {
-  display: none;
-}
