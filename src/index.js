@@ -59,8 +59,8 @@ async function onSearch(e) {
 }
 async function loadMore() {
     lightbox.refresh();
-    newsApiService.this.page += 1;
-    doNewMarcup();
+    doNewMarcup(result.data.hits);
+     newsApiService.this.page += 1;
 }
 // generateMarkupUI получает данные с сервера и рендерит разметку
 
@@ -103,7 +103,8 @@ function clearMarcup() {
         rootMargin: '150px',
     };
     const observer = new IntersectionObserver(onEntry, options);
-    observer.observe(refs.sentinel);
+observer.observe(refs.sentinel);
+   
 
 
 

@@ -1,4 +1,4 @@
-const callback = entries => {
+const callback = (entries,io) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             console.log('Hi');
@@ -11,4 +11,4 @@ const options = {};
 const observer = new IntersectionObserver(callback,options);
 
 const sentinel = document.querySelector('.container');
-observer.observe(sentinel);
+observer.observe(refs.sentinel);
