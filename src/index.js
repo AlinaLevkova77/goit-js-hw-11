@@ -23,7 +23,8 @@ function getRefs() {
 const newsApiService = new NewsApiService();
 
 
-refs.form.addEventListener('submit', onSearch)
+
+refs.form.addEventListener('submit', onSearch);
 
 async function onSearch(e) {
     e.preventDefault();
@@ -56,9 +57,9 @@ async function onSearch(e) {
     }
 
 }
-async function loadMore(){
+async function loadMore() {
     lightbox.refresh();
-    API.params.page += 1;
+    newsApiService.this.page += 1;
     doNewMarcup();
 }
 // generateMarkupUI получает данные с сервера и рендерит разметку
@@ -91,12 +92,9 @@ function clearMarcup() {
 //     refs.onLoadMoreBtn.classList.remove('is-hidden')
 // }
 
-
-
     const onEntry = entries => {
         entries.forEach(entry => {
             if (entry.IntersectionRatio && newsApiService.query !== '') {
-               
                 loadMore()
             }
         })
