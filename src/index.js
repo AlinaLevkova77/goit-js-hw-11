@@ -20,28 +20,29 @@ refs.form.addEventListener('submit', onSearch)
 
 async function onSearch(e) {
     e.preventDefault();
-    clearMarcup()
+    clearMarcup();
 
-   newsApiService.resetPage()
-   newsApiService.query = e.currentTarget.elements.searchQuery.value;
+    newsApiService.resetPage();
+    newsApiService.query = e.currentTarget.elements.searchQuery.value;
+   
 
     if (newsApiService.query === '') {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         // hiddeShowMoreBtn()
         return;
     }
-    newsApiService.resetPage()
+    newsApiService.resetPage();
     clearMarcup()
     
      try {
          const result = await newsApiService.onFindPhotos()
-          console.log(result);
+         console.log(result);
+         clearMarcup();
          doNewMarcup(result.data.hits);
-        clearMarcup()
-        
+         
          newsApiService.setTotalHits(result.data.setTotalHits);
          onLastPhotos()
-        //  showMoreBtn()
+       //  showMoreBtn()
          
     } catch (error) {
         Notiflix.Notify.failure("Sorry ,there are no images matching your search query.Please try again.");
@@ -55,7 +56,8 @@ async function onSearch(e) {
 // }
 
 function doNewMarcup(marcup) {
- refs.gallery.insertAdjacentHTML('beforeend',hits(marcup))
+    refs.gallery.insertAdjacentHTML('beforeend', hits(marcup))
+    
 }
 
 
@@ -63,10 +65,13 @@ function doNewMarcup(marcup) {
 function clearMarcup() {
     refs.gallery.innerHTML = '';
 }
-function onLastPhotos() {
-    if (newsApiService.lastTotalHils <= 40) {
-        hiddeShowMoreBtn()
-       Notiflix.Notify.info("We're sorry, but you've reached the end of search results");
+    function onLastPhotos() {
+     if (newsApiService.totalHils <= 40) {
+        
+        // hiddeShowMoreBtn()
+        Notiflix.Notify.info("We're sorry, but you've reached the end of search results");
+        clearMarcup();
+        return;
     }
     
 }
@@ -78,19 +83,18 @@ function onLastPhotos() {
 //     refs.onLoadMoreBtn.classList.remove('is-hidden')
 // }
 
-const onEntry = entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            console.log('пора' + Date.now());
-        }
-    })
+
+function registerIntersectionObserver() {
+    const onEntry = entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('пора' + Date.now());
+            }
+        })
+    }
+    const options = {
+        rootMargin: '150px',
+    };
+    const observer = new IntersectionObserver(onEntry, options);
+    observer.observe(refs.sentinel);
 }
-
-const options = {
-    rootMargin:'150px',
-}; 
-const observer = new IntersectionObserver(onEntry,options);
-
-
-observer.observe(refs.sentinel);
-
