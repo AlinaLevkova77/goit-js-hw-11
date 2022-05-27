@@ -29,7 +29,7 @@ async function generateMarckupUI() {
   doNewMarcup(result.data.hits);
         
   newsApiService.setTotalHits(result.data.totalHits);
-  console.log(result.data.total)
+  console.log(result.data)
         // onLastPhotos()
       //  showMoreBtn()
       lightbox = new SimpleLightbox('.gallery a', {
@@ -44,7 +44,9 @@ async function generateMarckupUI() {
      Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
     return;
     }
-  onLastPhotos()
+  if (newsApiService.totalHits <= 0) {
+    refs.sentinel.textContent = "We're sorry, but you've reached the end of search results";
+  }
 }
 async function onSearch(e) {
     e.preventDefault();
