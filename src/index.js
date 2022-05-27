@@ -7,10 +7,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 // import './if';
 // import './io';
 
-const lightbox = new SimpleLightbox('.photo-link', {
-  overlayOpacity: 0.4,
-  animationSpeed: 100,
-});
+let lightbox = null;
 const refs = getRefs()
 
 function getRefs() {
@@ -26,47 +23,49 @@ const newsApiService = new NewsApiService();
 
 refs.form.addEventListener('submit', onSearch);
 
+async function generateMarckupUI() {
+
+  const result = await newsApiService.onFindPhotos()
+  doNewMarcup(result.data.hits);
+        
+  newsApiService.setTotalHits(result.data.totalHits);
+  console.log(result.data.total)
+        // onLastPhotos()
+      //  showMoreBtn()
+      lightbox = new SimpleLightbox('.gallery a', {
+        overlayOpacity: 0.4,
+        animationSpeed: 100,
+      });
+    if (newsApiService.totalHits !== 0 ) {
+    Notiflix.Notify.success(`Hooray! We found ${result.data.totalHits} images.`);  
+    return;
+    }
+    if (newsApiService.totalHits === 0) {
+     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    return;
+    }
+  onLastPhotos()
+}
 async function onSearch(e) {
     e.preventDefault();
+    newsApiService.resetPage();
     clearMarcup();
 
-    newsApiService.resetPage();
-    newsApiService.query = e.currentTarget.elements.searchQuery.value;
-   
+    newsApiService.q = e.currentTarget.elements.searchQuery.value;
+    generateMarckupUI();
 
-    if (newsApiService.query === '') {
-        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-        // hiddeShowMoreBtn()
-        return;
-    }
-    newsApiService.resetPage();
-    clearMarcup()
-    
-     try {
-         const result = await newsApiService.onFindPhotos()
-         console.log(result);
-         clearMarcup();
-         doNewMarcup(result.data.hits);
-         
-         newsApiService.setTotalHits(result.data.setTotalHits);
-         onLastPhotos()
-       //  showMoreBtn()
-         
-    } catch (error) {
-        Notiflix.Notify.failure("Sorry ,there are no images matching your search query.Please try again.");
-    }
-
+ 
 }
-async function loadMore() {
+function loadMore() {
     lightbox.refresh();
-    doNewMarcup(result.data.hits);
-     newsApiService.this.page += 1;
+    newsApiService.page += 1;
+    generateMarckupUI();
+     
 }
 // generateMarkupUI получает данные с сервера и рендерит разметку
 
 function doNewMarcup(marcup) {
-    refs.gallery.insertAdjacentHTML('beforeend', hits(marcup))
-    
+    refs.gallery.insertAdjacentHTML('beforeend', hits(marcup));
 }
 
 
@@ -74,9 +73,8 @@ function doNewMarcup(marcup) {
 function clearMarcup() {
     refs.gallery.innerHTML = '';
 }
-    function onLastPhotos() {
-     if (newsApiService.totalHils <= 40) {
-        
+function onLastPhotos() {
+    if (newsApiService.totalHils <= 40) {
         // hiddeShowMoreBtn()
         Notiflix.Notify.info("We're sorry, but you've reached the end of search results");
         clearMarcup();
@@ -92,18 +90,21 @@ function clearMarcup() {
 //     refs.onLoadMoreBtn.classList.remove('is-hidden')
 // }
 
-    const onEntry = entries => {
-        entries.forEach(entry => {
-            if (entry.IntersectionRatio && newsApiService.query !== '') {
-                loadMore()
-            }
-        })
-    }
-    const options = {
-        rootMargin: '150px',
-    };
-    const observer = new IntersectionObserver(onEntry, options);
-observer.observe(refs.sentinel);
+
+    function onObserver(entries) {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio && newsApiService.q !== "") {
+        loadMore();
+      }
+    })
+  }
+  
+  const options = {
+    rootMargin: "400px",
+  };
+  
+  const observer = new IntersectionObserver(onObserver, options);
+  observer.observe(refs.sentinel);
    
 
 
@@ -112,3 +113,28 @@ observer.observe(refs.sentinel);
 
 
 
+
+
+
+// if (newsApiService.totalHits !== 0) {
+    
+//     Notiflix.Notify.success(`Hooray! We found ${result.data.totalHits} images.`);
+       
+//     return;
+//   }
+//   if (newsApiService.totalHits === 0) {
+    
+//     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    
+//     return;
+//   }
+//   if (newsApiService.totalHits <= 0) {
+    
+//     refs.sentinel.textContent = "We're sorry, but you've reached the end of search results";
+//   }
+
+
+
+
+
+  

@@ -12,26 +12,6 @@ body {
   line-height: 1.5;
 } 
 
-/* form {
-  display: flex;
-  background: #390c99;
-  padding: 20px;
-  width: 100%;
-  color: white;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-form input {
-  text-align: center;
-  padding: 5px;
-  margin-left: 40%;
-  width: 23%;
-  height: 29px;
-  border-radius:7px ;
-  
-}  */
-
 .wrapp {
   position: fixed;
   display: flex;
