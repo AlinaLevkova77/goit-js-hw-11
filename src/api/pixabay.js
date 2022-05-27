@@ -13,9 +13,12 @@ export default class NewsApiService {
         const URL_KEY = '27593469-896b3f7b8b670d808c482de21';
 
         const queryString= `q=${this.q}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`
-        const url = await axios.get(`${BASIC_URL}/api/?key=${URL_KEY}&${queryString}`); 
-        this.incrementPage()
-        return (await axios(url)).data;
+        const response = await axios.get(`${BASIC_URL}/api/?key=${URL_KEY}&${queryString}`); 
+        if (!response.data.total) {
+             this.page += 1;
+               
+        }
+        return response; 
     }
 
     
@@ -26,7 +29,7 @@ export default class NewsApiService {
     resetPage() {
         this.page = 1;
     }
-    incrementPage() {
+    increasePagу() {
         this.page += 1;
     }
     lastTotalHils() {
